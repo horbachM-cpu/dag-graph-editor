@@ -3,8 +3,11 @@
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
 ![PySide6](https://img.shields.io/badge/PySide6-6.5+-green.svg)
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+![AI-Assisted](https://img.shields.io/badge/AI--Assisted-GPT--5%20%2B%20Claude%20Opus%204.5-purple.svg)
 
 A powerful, visual **Directed Acyclic Graph (DAG)** editor built with Python and PySide6. Originally designed for game design and quest planning, it serves as a modern, minimalist alternative to legacy UML tools.
+
+![DAG Graph Editor Screenshot](screenshots/main_interface.png)
 
 ## ✨ Features
 
@@ -22,9 +25,9 @@ A powerful, visual **Directed Acyclic Graph (DAG)** editor built with Python and
 
 ### Project Management Mode
 - **Critical Path Method (CPM)**: Full implementation with:
-  - FAZ/FEZ (Earliest Start/End)
-  - SAZ/SEZ (Latest Start/End)
-  - GP/FP (Total/Free Float)
+  - ES/EF (Earliest Start/End)
+  - LS/LF (Latest Start/End)
+  - TF/FF (Total/Free Float)
 - **Dependency Types**: FS, SS, FF, SF with lag support
 - **Critical Path Highlighting**: Visual emphasis on critical activities
 - **WBS Roll-up**: Automatic summary calculation for parent nodes
@@ -62,16 +65,16 @@ python dag_graph_editor.py
 ## 🎮 Usage
 
 ### Basic Operations
-1. **Add Node**: Click "Neue Node" or use the toolbar button
-2. **Edit Node**: Right-click on a node → "Bearbeiten"
-3. **Delete Node**: Select node → "Node löschen" 
-4. **Re-Parent**: Click "Re-Parent-Modus" → Select child → Select new parent
+1. **Add Node**: Click "New Node" in the toolbar
+2. **Edit Node**: Right-click on a node → "Edit..."
+3. **Delete Node**: Select node → "Delete Node" 
+4. **Re-Parent**: Click "Re-Parent Mode" → Select child → Select new parent
 
 ### Project Management Mode
 1. Enable PM mode via toolbar toggle
 2. Create nodes (automatically become project nodes)
-3. Link activities: "Vorgang verknüpfen" → Select source → Select target → Choose type/lag
-4. Calculate critical path: "Kritischen Pfad berechnen"
+3. Link activities: "Link Activities (PM)" → Select source → Select target → Choose type/lag
+4. Calculate critical path: "Calculate Critical Path"
 
 ### Navigation
 - **Zoom**: Mouse wheel or +/- buttons
@@ -92,7 +95,9 @@ dag-graph-editor/
 │   ├── commands.py       # Undo/Redo command classes
 │   └── constants.py      # Shared constants
 ├── examples/
-│   └── sample_graph.json
+│   ├── sample_graph.json
+│   └── project_management_demo.json
+├── screenshots/
 ├── requirements.txt
 ├── LICENSE
 └── README.md
@@ -105,6 +110,15 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🤖 Built with AI
+
+This project showcases modern AI-assisted development:
+
+- **Initial Design & Architecture**: Created with [GPT-5 Thinking](https://openai.com) 🧠
+- **Code Review & Refactoring**: Polished with [Claude Opus 4.5](https://anthropic.com) in [Antigravity IDE](https://github.com/anthropics/antigravity) ✨
+
+> *"AI programming is not just cool — it's the future of software development."*
 
 ## 🙏 Acknowledgments
 
