@@ -46,7 +46,7 @@ A powerful, visual **Directed Acyclic Graph (DAG)** editor built with Python and
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR-USERNAME/dag-graph-editor.git
+git clone https://github.com/horbachM-cpu/dag-graph-editor.git
 cd dag-graph-editor
 
 # Install dependencies

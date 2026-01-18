@@ -5,7 +5,7 @@ A visual DAG (Directed Acyclic Graph) editor with Project Management capabilitie
 """
 
 __version__ = "1.0.0"
-__author__ = "Marcel"
+__author__ = "horbachM-cpu"
 
 from .model import GraphModel, GraphDocument
 from .main import MainWindow
