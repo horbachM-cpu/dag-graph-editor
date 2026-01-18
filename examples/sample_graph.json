@@ -1,0 +1,150 @@
+{
+  "version": "1.0",
+  "meta": {
+    "title": "Sample DAG Graph",
+    "createdAt": "2026-01-18"
+  },
+  "settings": {
+    "validation": {
+      "enforceAcyclic": true
+    },
+    "history": {
+      "maxDepth": 100
+    },
+    "ui": {
+      "showMinimap": true
+    },
+    "styling": {
+      "enableColorInheritance": true,
+      "inheritanceLuminanceStep": -8,
+      "inheritanceSaturationStep": -3
+    },
+    "edges": {
+      "decorationsEnabled": true
+    },
+    "pm": {
+      "enabled": false,
+      "showBuffers": true
+    }
+  },
+  "nodes": [
+    {
+      "id": "n001",
+      "label": "Project Start",
+      "parentId": null,
+      "attrs": {
+        "color": "#4CAF50",
+        "inheritColor": false,
+        "shape": "diamond",
+        "data": {
+          "text": "This is the root node of the project."
+        }
+      },
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "locked": false
+      }
+    },
+    {
+      "id": "n002",
+      "label": "Phase 1: Planning",
+      "parentId": "n001",
+      "attrs": {
+        "color": "#2196F3",
+        "inheritColor": false,
+        "shape": "rounded-rect",
+        "data": {
+          "text": "Initial planning phase"
+        }
+      },
+      "layout": {
+        "x": -150,
+        "y": 120,
+        "locked": false
+      }
+    },
+    {
+      "id": "n003",
+      "label": "Phase 2: Development",
+      "parentId": "n001",
+      "attrs": {
+        "color": "#FF9800",
+        "inheritColor": false,
+        "shape": "rounded-rect",
+        "data": {
+          "text": "Main development phase"
+        }
+      },
+      "layout": {
+        "x": 150,
+        "y": 120,
+        "locked": false
+      }
+    },
+    {
+      "id": "n004",
+      "label": "Requirements",
+      "parentId": "n002",
+      "attrs": {
+        "color": null,
+        "inheritColor": true,
+        "shape": "rect",
+        "data": {}
+      },
+      "layout": {
+        "x": -200,
+        "y": 240,
+        "locked": false
+      }
+    },
+    {
+      "id": "n005",
+      "label": "Design",
+      "parentId": "n002",
+      "attrs": {
+        "color": null,
+        "inheritColor": true,
+        "shape": "rect",
+        "data": {}
+      },
+      "layout": {
+        "x": -100,
+        "y": 240,
+        "locked": false
+      }
+    },
+    {
+      "id": "n006",
+      "label": "Frontend",
+      "parentId": "n003",
+      "attrs": {
+        "color": null,
+        "inheritColor": true,
+        "shape": "hexagon",
+        "data": {}
+      },
+      "layout": {
+        "x": 100,
+        "y": 240,
+        "locked": false
+      }
+    },
+    {
+      "id": "n007",
+      "label": "Backend",
+      "parentId": "n003",
+      "attrs": {
+        "color": null,
+        "inheritColor": true,
+        "shape": "hexagon",
+        "data": {}
+      },
+      "layout": {
+        "x": 200,
+        "y": 240,
+        "locked": false
+      }
+    }
+  ]
+}

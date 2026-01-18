@@ -1,0 +1,211 @@
+{
+    "version": "1.0",
+    "meta": {
+        "title": "Project Management Demo",
+        "createdAt": "2026-01-18"
+    },
+    "settings": {
+        "validation": {
+            "enforceAcyclic": true
+        },
+        "history": {
+            "maxDepth": 100
+        },
+        "ui": {
+            "showMinimap": true
+        },
+        "styling": {
+            "enableColorInheritance": true,
+            "inheritanceLuminanceStep": -8,
+            "inheritanceSaturationStep": -3
+        },
+        "edges": {
+            "decorationsEnabled": true
+        },
+        "pm": {
+            "enabled": true,
+            "showBuffers": true
+        }
+    },
+    "nodes": [
+        {
+            "id": "pm001",
+            "label": "Start",
+            "parentId": null,
+            "attrs": {
+                "color": "#4CAF50",
+                "inheritColor": false,
+                "shape": "projektnode",
+                "data": {}
+            },
+            "layout": {
+                "x": 0,
+                "y": 0,
+                "locked": false
+            },
+            "pm": {
+                "number": "1",
+                "name": "Project Kickoff",
+                "duration": 1,
+                "FAZ": 0,
+                "FEZ": 1,
+                "SAZ": 0,
+                "SEZ": 1,
+                "GP": 0,
+                "FP": 0,
+                "isCritical": true,
+                "isSummary": false
+            },
+            "pmDeps": []
+        },
+        {
+            "id": "pm002",
+            "label": "Analysis",
+            "parentId": null,
+            "attrs": {
+                "color": "#2196F3",
+                "inheritColor": false,
+                "shape": "projektnode",
+                "data": {}
+            },
+            "layout": {
+                "x": -100,
+                "y": 140,
+                "locked": false
+            },
+            "pm": {
+                "number": "2",
+                "name": "Requirements Analysis",
+                "duration": 3,
+                "FAZ": 1,
+                "FEZ": 4,
+                "SAZ": 1,
+                "SEZ": 4,
+                "GP": 0,
+                "FP": 0,
+                "isCritical": true,
+                "isSummary": false
+            },
+            "pmDeps": [
+                {
+                    "predId": "pm001",
+                    "type": "FS",
+                    "lag": 0
+                }
+            ]
+        },
+        {
+            "id": "pm003",
+            "label": "Design",
+            "parentId": null,
+            "attrs": {
+                "color": "#2196F3",
+                "inheritColor": false,
+                "shape": "projektnode",
+                "data": {}
+            },
+            "layout": {
+                "x": 100,
+                "y": 140,
+                "locked": false
+            },
+            "pm": {
+                "number": "3",
+                "name": "System Design",
+                "duration": 2,
+                "FAZ": 1,
+                "FEZ": 3,
+                "SAZ": 2,
+                "SEZ": 4,
+                "GP": 1,
+                "FP": 1,
+                "isCritical": false,
+                "isSummary": false
+            },
+            "pmDeps": [
+                {
+                    "predId": "pm001",
+                    "type": "FS",
+                    "lag": 0
+                }
+            ]
+        },
+        {
+            "id": "pm004",
+            "label": "Implementation",
+            "parentId": null,
+            "attrs": {
+                "color": "#FF9800",
+                "inheritColor": false,
+                "shape": "projektnode",
+                "data": {}
+            },
+            "layout": {
+                "x": 0,
+                "y": 280,
+                "locked": false
+            },
+            "pm": {
+                "number": "4",
+                "name": "Core Development",
+                "duration": 5,
+                "FAZ": 4,
+                "FEZ": 9,
+                "SAZ": 4,
+                "SEZ": 9,
+                "GP": 0,
+                "FP": 0,
+                "isCritical": true,
+                "isSummary": false
+            },
+            "pmDeps": [
+                {
+                    "predId": "pm002",
+                    "type": "FS",
+                    "lag": 0
+                },
+                {
+                    "predId": "pm003",
+                    "type": "FS",
+                    "lag": 0
+                }
+            ]
+        },
+        {
+            "id": "pm005",
+            "label": "Testing",
+            "parentId": null,
+            "attrs": {
+                "color": "#9C27B0",
+                "inheritColor": false,
+                "shape": "projektnode",
+                "data": {}
+            },
+            "layout": {
+                "x": 0,
+                "y": 420,
+                "locked": false
+            },
+            "pm": {
+                "number": "5",
+                "name": "Quality Assurance",
+                "duration": 2,
+                "FAZ": 9,
+                "FEZ": 11,
+                "SAZ": 9,
+                "SEZ": 11,
+                "GP": 0,
+                "FP": 0,
+                "isCritical": true,
+                "isSummary": false
+            },
+            "pmDeps": [
+                {
+                    "predId": "pm004",
+                    "type": "FS",
+                    "lag": 0
+                }
+            ]
+        }
+    ]
+}
