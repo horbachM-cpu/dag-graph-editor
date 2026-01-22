@@ -48,7 +48,27 @@ class GraphView(QGraphicsView):
         self.sync_items_from_model()
 
     def _init_background(self):
-        self.setBackgroundBrush(QBrush(QColor(250, 250, 250)))
+        """Initialize canvas with dark theme and subtle grid pattern."""
+        # Create a dark background with subtle grid
+        from PySide6.QtGui import QPixmap, QPainter
+        
+        # Dark background color
+        bg_color = QColor(30, 30, 46)  # Catppuccin base
+        grid_color = QColor(49, 50, 68, 80)  # Catppuccin surface0 with alpha
+        
+        # Create tiled grid pattern
+        grid_size = 20
+        pixmap = QPixmap(grid_size, grid_size)
+        pixmap.fill(bg_color)
+        
+        painter = QPainter(pixmap)
+        painter.setPen(QPen(grid_color, 1))
+        # Draw grid lines
+        painter.drawLine(0, 0, grid_size, 0)
+        painter.drawLine(0, 0, 0, grid_size)
+        painter.end()
+        
+        self.setBackgroundBrush(QBrush(pixmap))
 
     def item_for_node(self, node_id: str) -> Optional[NodeItem]:
         """Get the NodeItem for a node ID."""
@@ -188,7 +208,12 @@ class MiniMap(QGraphicsView):
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setInteractive(False)
-        self.setStyleSheet("background: rgba(255,255,255,220); border: 1px solid #aaa;")
+        # Dark theme styling
+        self.setStyleSheet("""
+            background: rgba(24, 24, 37, 240);
+            border: 2px solid #45475a;
+            border-radius: 8px;
+        """)
         self.setFixedSize(200, 150)
         
         try:

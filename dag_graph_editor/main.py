@@ -457,10 +457,43 @@ class MainWindow(QMainWindow):
         self._update_custom_info_for_node(self.info_panel.current_id)
 
     def _seed_sample(self):
-        """Create sample nodes."""
-        a = self.model.add_node("Root", None, QPointF(0, 0))
-        b = self.model.add_node("Child A", a.id, QPointF(0, 120))
-        c = self.model.add_node("Child B", b.id, QPointF(0, 240))
+        """Create sample nodes with attractive colors and shapes."""
+        # Root node - Green diamond
+        a = self.model.add_node("Project Start", None, QPointF(0, 0))
+        a.attrs.shape = "diamond"
+        a.attrs.color = "#a6e3a1"  # Catppuccin green
+        a.attrs.inheritColor = False
+        
+        # Planning branch - Blue
+        b = self.model.add_node("Planning", a.id, QPointF(-120, 120))
+        b.attrs.shape = "rounded-rect"
+        b.attrs.color = "#89b4fa"  # Catppuccin blue
+        b.attrs.inheritColor = False
+        
+        # Development branch - Orange
+        c = self.model.add_node("Development", a.id, QPointF(120, 120))
+        c.attrs.shape = "rounded-rect"
+        c.attrs.color = "#fab387"  # Catppuccin peach
+        c.attrs.inheritColor = False
+        
+        # Child nodes with inherited colors
+        d = self.model.add_node("Design", b.id, QPointF(-180, 240))
+        d.attrs.shape = "hexagon"
+        d.attrs.inheritColor = True
+        
+        e = self.model.add_node("Requirements", b.id, QPointF(-60, 240))
+        e.attrs.shape = "rect"
+        e.attrs.inheritColor = True
+        
+        f = self.model.add_node("Frontend", c.id, QPointF(60, 240))
+        f.attrs.shape = "hexagon"
+        f.attrs.inheritColor = True
+        
+        g = self.model.add_node("Backend", c.id, QPointF(180, 240))
+        g.attrs.shape = "hexagon"
+        g.attrs.inheritColor = True
+        
+        self.model.changed.emit()
         self.view.sync_items_from_model()
         self.view.fit_to_view()
 
@@ -468,6 +501,11 @@ class MainWindow(QMainWindow):
 def main():
     """Application entry point."""
     app = QApplication(sys.argv)
+    
+    # Apply modern dark theme
+    from .styles import DARK_THEME
+    app.setStyleSheet(DARK_THEME)
+    
     w = MainWindow()
     w.show()
     sys.exit(app.exec())
@@ -475,3 +513,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

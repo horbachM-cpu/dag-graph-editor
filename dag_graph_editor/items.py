@@ -32,7 +32,8 @@ class EdgeItem(QGraphicsPathItem):
         self.src = src
         self.dst = dst
         self.decorations = decorations
-        self.pen_normal = QPen(QColor(120, 120, 120), 1.5)
+        # Lighter edge color for dark theme
+        self.pen_normal = QPen(QColor(166, 173, 200), 2.0)  # Catppuccin subtext0
         
         # PM metadata
         self.is_pm = is_pm
@@ -43,8 +44,8 @@ class EdgeItem(QGraphicsPathItem):
         
         # Label for PM edges
         self.text_item = QGraphicsTextItem("", self)
-        self.text_item.setDefaultTextColor(QColor(90, 90, 90))
-        self.text_item.setFont(QFont("Arial", 8))
+        self.text_item.setDefaultTextColor(QColor(205, 214, 244))  # Catppuccin text
+        self.text_item.setFont(QFont("Segoe UI", 9, QFont.Bold))
         self.update_path()
 
     def update_path(self):
@@ -86,9 +87,10 @@ class EdgeItem(QGraphicsPathItem):
             try:
                 painter.translate(pos)
                 painter.rotate(angle)
-                painter.setBrush(QBrush(QColor(120, 120, 120)))
+                painter.setPen(Qt.NoPen)
+                painter.setBrush(QBrush(QColor(166, 173, 200)))  # Match edge color
                 poly = QPolygonF([
-                    QPointF(0, 0), QPointF(-8, 3.5), QPointF(-8, -3.5)
+                    QPointF(0, 0), QPointF(-10, 4.5), QPointF(-10, -4.5)
                 ])
                 painter.drawPolygon(poly)
             finally:
@@ -141,7 +143,7 @@ class NodeItem(QGraphicsItem):
         self.setAcceptHoverEvents(True)
         self.rect = QRectF(-NODE_W / 2, -NODE_H / 2, NODE_W, NODE_H)
         self._moving_with_children = False
-        self.label_font = QFont("Arial", 10)
+        self.label_font = QFont("Segoe UI", 10, QFont.Medium)
         self._orig_positions: Dict[str, QPointF] = {}
 
     def connection_pos_in(self) -> QPointF:
@@ -205,24 +207,63 @@ class NodeItem(QGraphicsItem):
     def paint(self, painter: QPainter, option, widget=None):
         n = self.model.doc.nodes[self.node_id]
         color = self.model.effective_color(self.node_id)
-        pen = QPen(QColor(60, 60, 60), 1.5)
+        
+        # Enable antialiasing for smoother shapes
+        painter.setRenderHint(QPainter.Antialiasing, True)
+        
+        # Draw shadow first (offset by 3px)
+        shadow_path = self._shape_path()
+        shadow_offset = QPointF(3, 3)
+        painter.save()
+        painter.translate(shadow_offset)
+        painter.setPen(Qt.NoPen)
+        painter.setBrush(QBrush(QColor(0, 0, 0, 40)))
+        painter.drawPath(shadow_path)
+        painter.restore()
+        
+        # Main shape pen
+        pen = QPen(QColor(45, 45, 55), 2.0)
         
         if self.isSelected():
-            pen.setWidthF(2.5)
-            pen.setColor(QColor(40, 120, 255))
+            pen.setWidthF(3.0)
+            pen.setColor(QColor(137, 180, 250))  # Catppuccin blue
             
         # Critical highlighting for projektnode in PM mode
         if n.attrs.shape == "projektnode" and n.pm and n.pm.isCritical:
-            pen.setColor(QColor(200, 40, 40))
-            pen.setWidthF(2.2)
+            pen.setColor(QColor(243, 139, 168))  # Catppuccin red
+            pen.setWidthF(2.5)
+        
+        # Create gradient brush for more depth
+        from PySide6.QtGui import QLinearGradient
+        gradient = QLinearGradient(self.rect.topLeft(), self.rect.bottomLeft())
+        base_color = color
+        lighter = QColor(base_color)
+        lighter.setHsl(
+            lighter.hslHue(),
+            max(0, lighter.hslSaturation() - 10),
+            min(255, lighter.lightness() + 20)
+        )
+        darker = QColor(base_color)
+        darker.setHsl(
+            darker.hslHue(),
+            min(255, darker.hslSaturation() + 10),
+            max(0, darker.lightness() - 15)
+        )
+        gradient.setColorAt(0, lighter)
+        gradient.setColorAt(1, darker)
             
         painter.setPen(pen)
-        painter.setBrush(QBrush(color))
+        painter.setBrush(QBrush(gradient))
         painter.drawPath(self._shape_path())
 
-        # Text rendering
+        # Text rendering with better contrast
         painter.setFont(self.label_font)
-        painter.setPen(QPen(QColor(20, 20, 20)))
+        
+        # Calculate text color based on background brightness
+        brightness = (color.red() * 299 + color.green() * 587 + color.blue() * 114) / 1000
+        text_color = QColor(30, 30, 46) if brightness > 128 else QColor(205, 214, 244)
+        painter.setPen(QPen(text_color))
+        
         br = self.rect
         
         if n.attrs.shape == "projektnode":
